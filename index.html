@@ -1,1 +1,96 @@
-index.html
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080912"><title>FYT INSTA</title>
+<style>
+:root{--red:#ff303e;--blue:#3478ff;--gold:#ffd76a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 12% 10%,#37101c 0,transparent 32%),radial-gradient(circle at 90% 25%,#102a59 0,transparent 35%),linear-gradient(145deg,#05060b,#0c1020 65%,#090a12);color:#fff;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;padding:22px}
+.shell{width:min(100%,410px);padding:26px 22px 22px;border:1px solid #ffffff20;border-radius:30px;background:linear-gradient(155deg,#171b2bef,#0b0e18f5);box-shadow:0 24px 70px #000b,0 0 35px #236bff22;position:relative;overflow:hidden}.shell:before{content:"";position:absolute;width:190px;height:190px;right:-90px;top:-95px;background:#ff304033;filter:blur(10px);border-radius:50%}
+.top{display:flex;justify-content:space-between;align-items:center;position:relative}.lang{border:1px solid #ffffff2c;background:#ffffff0d;color:#fff;border-radius:999px;padding:8px 11px;font-weight:700}.brand{text-align:center;margin:22px 0 25px;position:relative}.crown{font-size:48px;filter:drop-shadow(0 0 13px #ffd76a88);line-height:1}.brand h1{margin:8px 0 3px;font-size:34px;letter-spacing:2px;font-weight:950;background:linear-gradient(90deg,#fff,#ffd76a,#ff394c,#5792ff);-webkit-background-clip:text;background-clip:text;color:transparent}.tag{color:#b8c1d7;font-size:11px;letter-spacing:3px;text-transform:uppercase}
+.tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;border:1px solid #ffffff1c;border-radius:14px;background:#050711;margin-bottom:18px}.tabs button{border:0;background:transparent;color:#aab2c5;padding:11px;border-radius:10px;font-weight:800}.tabs button.active{color:#fff;background:linear-gradient(100deg,var(--red),var(--blue));box-shadow:0 5px 18px #3478ff33}
+label{display:block;color:#dce3f5;font-size:12px;font-weight:750;margin:13px 0 7px}input{width:100%;padding:14px 13px;border:1px solid #ffffff20;border-radius:13px;background:#080b14;color:#fff;outline:none;font-size:14px}input:focus{border-color:#5792ff;box-shadow:0 0 0 3px #3478ff22}.primary{width:100%;border:0;border-radius:14px;padding:14px;margin-top:19px;color:white;font-weight:900;font-size:15px;background:linear-gradient(100deg,var(--red),#9b3dba,var(--blue));box-shadow:0 10px 25px #3478ff33}.switchline{text-align:center;color:#aab2c5;font-size:12px;margin:17px 0 0}.switchline button{background:none;border:0;color:#ffd76a;font-weight:900}.divider{display:flex;align-items:center;gap:12px;color:#768198;font-size:11px;margin:17px 0}.divider:before,.divider:after{content:"";height:1px;background:#ffffff20;flex:1}.notice{margin-top:12px;color:#ffd76a;font-size:12px;text-align:center;min-height:18px;line-height:1.5}.admin{margin-top:22px;padding:12px;border:1px solid #ffd76a35;border-radius:14px;background:#ffd76a0b;text-align:center;color:#f8dda0;font-size:11px}.admin b{display:block;color:#fff;font-size:13px;margin-top:3px;letter-spacing:1px}.foot{text-align:center;color:#778198;font-size:10px;margin-top:17px}.hidden{display:none!important}
+</style></head>
+<body><main class="shell">
+<div class="top"><span style="font-size:11px;font-weight:900;letter-spacing:1.5px;color:#dbe4ff">SOCIAL • CONNECT • SHARE</span><button class="lang" id="langBtn" type="button">हिंदी</button></div>
+<header class="brand"><div class="crown">👑</div><h1>FYT INSTA</h1><div class="tag" id="tagline">YOUR ROYAL SOCIAL WORLD</div></header>
+<div class="tabs"><button id="loginTab" class="active" type="button">Login</button><button id="signupTab" type="button">Sign Up</button></div>
+<form id="authForm">
+<div id="nameWrap" class="hidden"><label for="name">Your name</label><input id="name" autocomplete="name" placeholder="Enter your name"></div>
+<label for="email" id="emailLabel">Gmail / Email</label><input id="email" type="email" autocomplete="username" placeholder="Enter your email" required>
+<label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters" required minlength="6">
+<button class="primary" id="submitBtn" type="submit">LOGIN</button>
+</form>
+<p class="switchline" id="switchLine">New to FYT INSTA? <button id="switchBtn" type="button">Create account</button></p>
+<div class="notice" id="notice" aria-live="polite">Firebase setup is required before account creation.</div>
+<div class="admin"><span>APP ADMIN</span><b>AKASH ADMIN</b></div>
+<div class="foot">FYT INSTA • Firebase email authentication</div>
+</main>
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
+
+// IMPORTANT: Replace the placeholder values below with your Firebase project's Web App config.
+const firebaseConfig = {
+  apiKey: 'PASTE_YOUR_API_KEY',
+  authDomain: 'PASTE_YOUR_PROJECT_ID.firebaseapp.com',
+  projectId: 'PASTE_YOUR_PROJECT_ID',
+  storageBucket: 'PASTE_YOUR_PROJECT_ID.firebasestorage.app',
+  messagingSenderId: 'PASTE_YOUR_MESSAGING_SENDER_ID',
+  appId: 'PASTE_YOUR_APP_ID'
+};
+
+let auth = null;
+let mode = 'login';
+const $ = id => document.getElementById(id);
+const isConfigured = !Object.values(firebaseConfig).some(v => String(v).includes('PASTE_'));
+if (isConfigured) {
+  try { auth = getAuth(initializeApp(firebaseConfig)); }
+  catch (err) { $('notice').textContent = 'Firebase setup error: ' + err.message; }
+} else {
+  $('notice').textContent = 'Firebase config abhi add nahi hua. Pehle config values bharni hongi.';
+}
+function setMode(next) {
+  mode = next; const signup = mode === 'signup';
+  $('loginTab').classList.toggle('active', !signup); $('signupTab').classList.toggle('active', signup);
+  $('nameWrap').classList.toggle('hidden', !signup);
+  $('name').required = signup;
+  $('submitBtn').textContent = signup ? 'CREATE ACCOUNT' : 'LOGIN';
+  $('switchLine').innerHTML = signup ? 'Already have an account? ' : 'New to FYT INSTA? ';
+  const b = document.createElement('button'); b.type = 'button'; b.textContent = signup ? 'Login' : 'Create account';
+  b.onclick = () => setMode(signup ? 'login' : 'signup'); $('switchLine').appendChild(b);
+  $('notice').textContent = auth ? '' : 'Firebase config add karna abhi baaki hai.';
+}
+$('loginTab').onclick = () => setMode('login');
+$('signupTab').onclick = () => setMode('signup');
+$('langBtn').onclick = () => { const hi = $('langBtn').textContent === 'हिंदी'; $('langBtn').textContent = hi ? 'English' : 'हिंदी'; $('tagline').textContent = hi ? 'YOUR ROYAL SOCIAL WORLD' : 'आपकी शाही सोशल दुनिया'; };
+$('authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = $('email').value.trim(); const password = $('password').value;
+  const name = $('name').value.trim(); const btn = $('submitBtn');
+  if (!auth) { $('notice').textContent = 'Firebase config missing hai. Config add karne ke baad hi Sign Up chalega.'; return; }
+  btn.disabled = true; btn.textContent = 'PLEASE WAIT...'; $('notice').textContent = '';
+  try {
+    if (mode === 'signup') {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(result.user, { displayName: name });
+      $('notice').textContent = 'Account ban gaya! Ab aap login kar sakte hain.';
+      $('authForm').reset(); setMode('login'); $('notice').textContent = 'Account successfully created. Ab Login karein.';
+    } else {
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      $('notice').textContent = 'Login successful! Welcome ' + (result.user.displayName || result.user.email) + '.';
+    }
+  } catch (err) {
+    const messages = {
+      'auth/email-already-in-use': 'Ye email pehle se registered hai. Login karein.',
+      'auth/invalid-email': 'Email address sahi nahi hai.',
+      'auth/weak-password': 'Password kam se kam 6 characters ka rakhein.',
+      'auth/invalid-credential': 'Email ya password galat hai.',
+      'auth/network-request-failed': 'Internet connection check karein.'
+    };
+    $('notice').textContent = messages[err.code] || ('Error: ' + err.message);
+  } finally { btn.disabled = false; btn.textContent = mode === 'signup' ? 'CREATE ACCOUNT' : 'LOGIN'; }
+});
+setMode('login');
+</script></body></html>
